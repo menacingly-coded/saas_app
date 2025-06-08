@@ -5,16 +5,20 @@ import Cta from "@/components/CTA";
 const Page = () => {
   return (
     <main>
-      <h1 className="text-2xl underline">Popular Companions</h1>
+      <h1>Popular Companions</h1>
       <section>
-        <CompanionCard/>
-        <CompanionCard/>
-        <CompanionCard/>
+        <CompanionCard />
+        <CompanionCard />
+        <CompanionCard />
       </section>
 
       <section className="home-section">
         <CompanionsList/>
         <Cta/>
+      </section>
+      <section className="home-section">
+        <CompanionsList />
+        <Cta />
       </section>
     </main>
   )
