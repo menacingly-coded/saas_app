@@ -42,10 +42,6 @@ const Page = () => {
         />
         <Cta/>
       </section>
-      <section className="home-section">
-        <CompanionsList />
-        <Cta />
-      </section>
     </main>
   )
 }
