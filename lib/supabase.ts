@@ -1,19 +1,27 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { auth } from "@clerk/nextjs/server";
 
-export const createSupabaseClient = async () => {
-  const { getToken } = auth();
-  const token = await getToken({ template: "supabase" });
+let supabaseClient: SupabaseClient | null = null;
 
-  return createClient(
+export const createSupabaseClient = async () => {
+  if (supabaseClient) return supabaseClient;
+
+  // Default headers for client-side (no token)
+  let headers: Record<string, string> = {};
+
+  // Server-side: inject Clerk JWT if available
+  if (typeof window === "undefined") {
+    const token = await auth().getToken({ template: "supabase" });
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+  }
+
+  supabaseClient = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      global: {
-        headers: {
-          Authorization: token? `Bearer ${token}` : "",
-        },
-      },
-    }
+    { global: { headers } }
   );
+
+  return supabaseClient;
 };
