@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 import {withSentryConfig} from "@sentry/nextjs";
 import type { NextConfig } from "next";
 import { hostname } from "os";
