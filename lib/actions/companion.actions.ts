@@ -7,12 +7,14 @@ import { revalidatePath } from "next/cache";
 /* =====================================================
    CREATE COMPANION
 ===================================================== */
+import { redirect } from "next/navigation";
+
 export const createCompanion = async (formData: CreateCompanion) => {
   const authData = await auth();
   const userId = authData.userId;
 
   if (!userId) {
-    console.error("createCompanion: user not authenticated");
+    console.error("User not authenticated");
     return null;
   }
 
@@ -28,7 +30,8 @@ export const createCompanion = async (formData: CreateCompanion) => {
     return null;
   }
 
-  return data[0];
+  // ✅ YAHI redirect lagana hai
+  redirect(`/companions/${data[0].id}`);
 };
 
 /* =====================================================
